@@ -1,7 +1,7 @@
-diff --git a/PyTorch/computer_vision/classification/torchvision/train.py b/PyTorch/computer_vision/classification/torchvision/train.py
+diff --git a/train.py b/train.py
 index b81f77c..8821815 100644
---- a/PyTorch/computer_vision/classification/torchvision/train.py
-+++ b/PyTorch/computer_vision/classification/torchvision/train.py
+--- a/train.py
++++ b/train.py
 @@ -140,14 +140,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
          print("Loading dataset_train from {}".format(cache_path))
          dataset, _ = torch.load(cache_path)
