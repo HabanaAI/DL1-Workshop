@@ -1,8 +1,8 @@
-diff --git a/train.py b/train.py
-index b81f77c..8821815 100644
---- a/train.py
-+++ b/train.py
-@@ -140,14 +140,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
+diff --git a/PyTorch/computer_vision/classification/torchvision/train.py b/PyTorch/computer_vision/classification/torchvision/train.py
+index 159d26c..47c8120 100644
+--- a/PyTorch/computer_vision/classification/torchvision/train.py
++++ b/PyTorch/computer_vision/classification/torchvision/train.py
+@@ -148,14 +148,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
          print("Loading dataset_train from {}".format(cache_path))
          dataset, _ = torch.load(cache_path)
      else:
@@ -30,7 +30,7 @@ index b81f77c..8821815 100644
          if cache_dataset:
              print("Saving dataset_train to {}".format(cache_path))
              utils.mkdir(os.path.dirname(cache_path))
-@@ -161,14 +166,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
+@@ -169,14 +174,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
          print("Loading dataset_test from {}".format(cache_path))
          dataset_test, _ = torch.load(cache_path)
      else:
@@ -58,14 +58,14 @@ index b81f77c..8821815 100644
          if cache_dataset:
              print("Saving dataset_test to {}".format(cache_path))
              utils.mkdir(os.path.dirname(cache_path))
-@@ -362,8 +372,8 @@ def main(args):
+@@ -414,8 +424,8 @@ def main(args):
+         train_one_epoch(lr_scheduler, model_for_train, criterion, optimizer, data_loader,
                  device, epoch, print_freq=args.print_freq, apex=args.apex)
-         if lr_scheduler is not None:
-             lr_scheduler.step()
--        evaluate(model_for_eval, criterion, data_loader_test, device=device,
--                print_freq=args.print_freq)
-+        #evaluate(model_for_eval, criterion, data_loader_test, device=device,
-+        #        print_freq=args.print_freq)
+         if epoch == next_eval_epoch:
+-            evaluate(model_for_eval, criterion, data_loader_test, device=device,
+-                    print_freq=args.print_freq)
++            #evaluate(model_for_eval, criterion, data_loader_test, device=device,
++            #        print_freq=args.print_freq)
+             next_eval_epoch += args.epochs_between_evals
  
          if (args.output_dir and args.save_checkpoint):
-             if args.device == 'hpu':
