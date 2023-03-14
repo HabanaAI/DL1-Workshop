@@ -1,11 +1,11 @@
 diff --git a/PyTorch/computer_vision/classification/torchvision/train.py b/PyTorch/computer_vision/classification/torchvision/train.py
-index 159d26c..47c8120 100644
+index 9847a0eb2..b4f29d944 100644
 --- a/PyTorch/computer_vision/classification/torchvision/train.py
 +++ b/PyTorch/computer_vision/classification/torchvision/train.py
-@@ -148,14 +148,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
-         print("Loading dataset_train from {}".format(cache_path))
-         dataset, _ = torch.load(cache_path)
-     else:
+@@ -173,14 +173,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
+         # Note that transforms are used only by native python data loader: torch.utils.data.DataLoader
+         # and Aeon data loader. In case of MediaAPI, transforms are implemented independently using
+         # API calls (see resnet_media_pipe.py code)
 -        dataset = torchvision.datasets.ImageFolder(
 -            traindir,
 -            transforms.Compose([
@@ -30,10 +30,10 @@ index 159d26c..47c8120 100644
          if cache_dataset:
              print("Saving dataset_train to {}".format(cache_path))
              utils.mkdir(os.path.dirname(cache_path))
-@@ -169,14 +174,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
-         print("Loading dataset_test from {}".format(cache_path))
+@@ -195,14 +200,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
          dataset_test, _ = torch.load(cache_path)
      else:
+         # Transforms are not used by MediaAPI data loader. See comment above for 'dataset' transforms.
 -        dataset_test = torchvision.datasets.ImageFolder(
 -            valdir,
 -            transforms.Compose([
@@ -58,14 +58,14 @@ index 159d26c..47c8120 100644
          if cache_dataset:
              print("Saving dataset_test to {}".format(cache_path))
              utils.mkdir(os.path.dirname(cache_path))
-@@ -414,8 +424,8 @@ def main(args):
-         train_one_epoch(lr_scheduler, model_for_train, criterion, optimizer, data_loader,
-                 device, epoch, print_freq=args.print_freq, apex=args.apex)
+@@ -454,8 +464,8 @@ def main(args):
+                 device, epoch, print_freq=train_print_freq, apex=args.apex,
+                 tb_writer=tb_writer, steps_per_epoch=steps_per_epoch)
          if epoch == next_eval_epoch:
 -            evaluate(model_for_eval, criterion, data_loader_test, device=device,
--                    print_freq=args.print_freq)
+-                    print_freq=eval_print_freq, tb_writer=tb_writer, epoch=epoch)
 +            #evaluate(model_for_eval, criterion, data_loader_test, device=device,
-+            #        print_freq=args.print_freq)
++            #        print_freq=eval_print_freq, tb_writer=tb_writer, epoch=epoch)
              next_eval_epoch += args.epochs_between_evals
  
          if (args.output_dir and args.save_checkpoint):
