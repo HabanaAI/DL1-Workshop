@@ -1,5 +1,5 @@
 diff --git a/PyTorch/computer_vision/classification/torchvision/train.py b/PyTorch/computer_vision/classification/torchvision/train.py
-index 9847a0eb2..b4f29d944 100644
+index 6c924fc..b69d6ea 100644
 --- a/PyTorch/computer_vision/classification/torchvision/train.py
 +++ b/PyTorch/computer_vision/classification/torchvision/train.py
 @@ -173,14 +173,19 @@ def load_data(traindir, valdir, cache_dataset, distributed):
@@ -58,14 +58,14 @@ index 9847a0eb2..b4f29d944 100644
          if cache_dataset:
              print("Saving dataset_test to {}".format(cache_path))
              utils.mkdir(os.path.dirname(cache_path))
-@@ -454,8 +464,8 @@ def main(args):
+@@ -460,8 +470,8 @@ def main(args):
                  device, epoch, print_freq=train_print_freq, apex=args.apex,
-                 tb_writer=tb_writer, steps_per_epoch=steps_per_epoch)
+                 tb_writer=tb_writer, steps_per_epoch=steps_per_epoch, is_autocast=args.is_autocast)
          if epoch == next_eval_epoch:
 -            evaluate(model_for_eval, criterion, data_loader_test, device=device,
--                    print_freq=eval_print_freq, tb_writer=tb_writer, epoch=epoch)
+-                    print_freq=eval_print_freq, tb_writer=tb_writer, epoch=epoch, is_autocast=args.is_autocast)
 +            #evaluate(model_for_eval, criterion, data_loader_test, device=device,
-+            #        print_freq=eval_print_freq, tb_writer=tb_writer, epoch=epoch)
++            #        print_freq=eval_print_freq, tb_writer=tb_writer, epoch=epoch, is_autocast=args.is_autocast)
              next_eval_epoch += args.epochs_between_evals
- 
-         if (args.output_dir and args.save_checkpoint):
+
+         if args.output_dir and args.save_checkpoint:
